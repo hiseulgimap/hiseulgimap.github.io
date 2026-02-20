@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "author": "ovxbjh",
-  "homepage": "https://hiseulgitour.github.io",
+  "homepage": "https://hiseulgimap.github.io",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
