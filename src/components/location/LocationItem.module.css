@@ -1,0 +1,116 @@
+.location:link,
+.location:visited {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border: var(--border-solid);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    background-color var(--transition),
+    transform var(--transition);
+}
+
+.location:hover,
+.location:active {
+  border-color: var(--color-primary-25);
+  background-color: var(--color-primary-5);
+  transform: translateY(-6px);
+}
+
+.location:active {
+  transform: translateY(-6px) scale(0.95);
+}
+
+.num {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0 0 auto;
+  color: #fff;
+  font-weight: 800;
+  border-radius: 1000px;
+  background-color: var(--color-primary-base);
+  transition:
+    color var(--transition),
+    background-color var(--transition);
+}
+
+.title-wrap {
+  min-height: 2.25rem;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  transition: color var(--transition);
+}
+
+.city {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  transition: color var(--transition);
+}
+
+.address {
+  display: block;
+  margin-top: 0.75rem;
+  color: var(--color-font-sub-medium);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  transition: color var(--transition);
+}
+
+.tag {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.category,
+.bookmark {
+  padding: 0.35rem 0.45rem;
+  color: var(--color-font-sub-medium);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 0.25rem;
+  background-color: var(--color-content-sub-light);
+  transition:
+    color var(--transition),
+    background-color var(--transition);
+}
+
+.bookmark {
+  color: var(--color-primary-dark);
+  background-color: var(--color-primary-15);
+}
+
+@media screen and (max-width: 48rem) {
+  .num {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.8125rem;
+  }
+
+  .title {
+    font-size: 0.925rem;
+  }
+
+  .city,
+  .address {
+    font-size: 0.75rem;
+  }
+
+  .category,
+  .bookmark {
+    font-size: 0.625rem;
+  }
+}

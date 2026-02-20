@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 1.5rem;
+  border: var(--border-solid);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow);
+  background-color: var(--color-content-sub-light-max);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    background-color var(--transition);
+  animation: slideUp 0.75s ease;
+}
+
+.emoji {
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+}
+
+.title {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  transition: color var(--transition);
+}
+
+.content {
+  line-height: 1.4;
+  transition: color var(--transition);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 48rem) {
+  .emoji {
+    font-size: 2rem;
+  }
+
+  .title {
+    font-size: 0.8125rem;
+  }
+
+  .content {
+    font-size: 0.625rem;
+  }
+}

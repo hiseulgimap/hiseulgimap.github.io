@@ -1,0 +1,39 @@
+#header {
+  height: var(--header-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  border-bottom: var(--border-solid);
+  background-color: var(--color-content);
+  transition:
+    border-color var(--transition),
+    background-color var(--transition);
+  z-index: 99;
+}
+
+.wrap {
+  width: var(--width);
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  padding: 1.25rem 0;
+}
+
+@media screen and (max-width: 68rem) {
+  .wrap {
+    width: 100%;
+    max-width: var(--width);
+    gap: 1.5rem;
+    padding: 1.25rem 2rem;
+  }
+}
+
+@media screen and (max-width: 48rem) {
+  .wrap {
+    gap: 0.5rem;
+    padding: 1.25rem 1.5rem;
+  }
+}

@@ -1,0 +1,56 @@
+#tip {
+  padding: 1.25rem;
+  position: relative;
+  border: var(--border-solid);
+  border-radius: 0.75rem;
+  transition: border-color var(--transition);
+  animation: slideUp 0.75s ease;
+  overflow: hidden;
+  z-index: 1;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(25%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+#tip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 1;
+  background: linear-gradient(to bottom, var(--color-zinc-0), var(--color-zinc-50));
+  transition: opacity var(--transition);
+  z-index: -1;
+}
+
+#tip::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: linear-gradient(to bottom, var(--color-zinc-850), var(--color-zinc-900));
+  transition: opacity var(--transition);
+  z-index: -1;
+}
+
+:root[data-theme='dark'] #tip::before {
+  opacity: 0;
+}
+
+:root[data-theme='dark'] #tip::after {
+  opacity: 1;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 700;
+  transition: color var(--transition);
+}

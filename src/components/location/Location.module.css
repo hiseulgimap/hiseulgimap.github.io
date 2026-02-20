@@ -1,0 +1,26 @@
+.list {
+  min-height: calc(100dvh - (3.5rem + 2rem + 2rem + 3rem + 5rem + 30px + 36px + 92px + 24px + var(--header-height)));
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: min-content;
+  gap: 1rem;
+  animation: slideUp 0.55s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(25%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 46.25rem) {
+  .list {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,1051 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>어니언 성수 — HiSeulgi Map</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --yellow: #f5c400;
+        --yellow-light: #fffbeb;
+        --yellow-border: #fde68a;
+        --border: #e5e7eb;
+        --border-hover: #d1d5db;
+        --text: #111827;
+        --text-sub: #6b7280;
+        --text-muted: #9ca3af;
+        --bg: #ffffff;
+        --bg-subtle: #f9fafb;
+        --bg-hover: #f3f4f6;
+        --radius: 12px;
+        --radius-sm: 8px;
+        --max-w: 1000px;
+      }
+
+      body {
+        font-family: 'Noto Sans KR', sans-serif;
+        background: var(--bg-subtle);
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      /* ── TOPBAR ── */
+      .topbar {
+        height: 56px;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .topbar-inner {
+        max-width: var(--max-w);
+        margin: 0 auto;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0 24px;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        color: var(--text);
+        margin-right: 32px;
+        flex-shrink: 0;
+      }
+      .logo-text {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 20px;
+        letter-spacing: 0.5px;
+      }
+      .logo-text span {
+        color: var(--yellow);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        flex: 1;
+      }
+      .nav-item {
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: var(--text-sub);
+        text-decoration: none;
+        transition:
+          background 0.15s,
+          color 0.15s;
+        white-space: nowrap;
+      }
+      .nav-item:hover {
+        background: var(--bg-hover);
+        color: var(--text);
+      }
+      .nav-item.active {
+        color: var(--text);
+        background: var(--bg-hover);
+      }
+      .nav-divider {
+        width: 1px;
+        height: 18px;
+        background: var(--border);
+        margin: 0 6px;
+      }
+      .nav-right {
+        margin-left: auto;
+        display: flex;
+        gap: 8px;
+      }
+      .btn-topbar {
+        height: 34px;
+        padding: 0 12px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: var(--text-sub);
+        font-family: 'Noto Sans KR', sans-serif;
+        font-size: 12.5px;
+        font-weight: 500;
+        transition: background 0.15s;
+      }
+      .btn-topbar:hover {
+        background: var(--bg-hover);
+        color: var(--text);
+      }
+
+      /* ── PAGE ── */
+      .page {
+        max-width: var(--max-w);
+        margin: 0 auto;
+        padding: 28px 24px 64px;
+      }
+
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+      }
+      .breadcrumb a {
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.15s;
+      }
+      .breadcrumb a:hover {
+        color: var(--text-sub);
+      }
+      .breadcrumb-sep {
+        font-size: 11px;
+      }
+      .breadcrumb-current {
+        color: var(--text-sub);
+        font-weight: 500;
+      }
+
+      /* ── TWO-COLUMN ── */
+      .layout {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 16px;
+        align-items: start;
+      }
+      .col-left {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      /* Map */
+      .map-card {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .map-mock {
+        height: 360px;
+        background: linear-gradient(135deg, #e8ead0 0%, #dde0c0 100%);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .map-mock::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.35) 1px, transparent 1px);
+        background-size: 44px 44px;
+      }
+      .map-roads {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .map-pin-wrap {
+        position: relative;
+        z-index: 2;
+      }
+      .map-pin {
+        width: 36px;
+        height: 36px;
+        background: #ea4335;
+        border: 3px solid #fff;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .map-pin-inner {
+        width: 10px;
+        height: 10px;
+        background: #fff;
+        border-radius: 50%;
+      }
+      .map-type-row {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        display: flex;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        z-index: 3;
+      }
+      .map-type-btn {
+        padding: 5px 12px;
+        font-family: 'Noto Sans KR', sans-serif;
+        font-size: 12.5px;
+        font-weight: 500;
+        border: none;
+        background: none;
+        color: var(--text-sub);
+        cursor: pointer;
+        transition: all 0.15s;
+        border-right: 1px solid var(--border);
+      }
+      .map-type-btn:last-child {
+        border-right: none;
+      }
+      .map-type-btn.active {
+        background: var(--text);
+        color: #fff;
+      }
+      .map-expand-btn {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 3;
+        width: 32px;
+        height: 32px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        color: var(--text-sub);
+        transition: background 0.15s;
+      }
+      .map-expand-btn:hover {
+        background: var(--bg-hover);
+      }
+      .address-bar {
+        background: var(--text);
+        padding: 13px 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .address-zip {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--yellow);
+        flex-shrink: 0;
+      }
+      .address-full {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.88);
+        flex: 1;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .address-copy-btn {
+        width: 30px;
+        height: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: rgba(255, 255, 255, 0.5);
+        flex-shrink: 0;
+        transition: all 0.15s;
+      }
+      .address-copy-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+      }
+
+      /* Video */
+      .video-card {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .card-header {
+        padding: 11px 16px;
+        border-bottom: 1px solid var(--border);
+        font-size: 11.5px;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .video-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 16px;
+        cursor: pointer;
+        transition: background 0.12s;
+      }
+      .video-item:hover {
+        background: var(--bg-subtle);
+      }
+      .video-thumb {
+        width: 100px;
+        height: 66px;
+        border-radius: 8px;
+        background: #1a1a2e;
+        flex-shrink: 0;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .video-thumb-mock {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #1c1c30, #2e2e48);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        color: rgba(255, 255, 255, 0.2);
+      }
+      .video-play-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.15s;
+        border-radius: 8px;
+      }
+      .video-item:hover .video-play-overlay {
+        opacity: 1;
+      }
+      .play-btn {
+        width: 28px;
+        height: 28px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .video-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .video-title {
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 4px;
+      }
+      .video-date {
+        font-size: 11.5px;
+        color: var(--text-muted);
+      }
+      .timestamp-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 11px;
+        border-radius: 6px;
+        background: var(--yellow);
+        color: var(--text);
+        font-size: 12px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        font-family: 'Noto Sans KR', sans-serif;
+        flex-shrink: 0;
+        transition: background 0.15s;
+      }
+      .timestamp-btn:hover {
+        background: #e6b800;
+      }
+      .video-hint {
+        padding: 0 16px 12px;
+        font-size: 11.5px;
+        color: var(--text-muted);
+      }
+
+      /* ── RIGHT COLUMN ── */
+      .col-right {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        position: sticky;
+        top: 72px;
+      }
+      .identity-card {
+        /* background: var(--bg); */
+        background-image: linear-gradient(to bottom, var(--bg) 0, var(--yellow-light) 100%);
+        border: 1px solid var(--yellow-border);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .identity-hero {
+        height: 96px;
+        background: linear-gradient(135deg, #fff9e0 0%, #fffbeb 100%);
+        border-bottom: 1px solid var(--yellow-border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 46px;
+        position: relative;
+      }
+      .identity-hero-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 3px 8px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid var(--yellow-border);
+        color: #7a6000;
+      }
+      .identity-body {
+        padding: 14px 16px;
+      }
+      .identity-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 10px;
+      }
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 11.5px;
+        font-weight: 500;
+        padding: 3px 9px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: var(--bg-subtle);
+        color: var(--text-sub);
+      }
+      .tag-region {
+        background: var(--yellow-light);
+        border-color: var(--yellow-border);
+        color: #7a6000;
+      }
+      .place-name {
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: -0.4px;
+        line-height: 1.3;
+        margin-bottom: 3px;
+      }
+      .place-name-sub {
+        font-size: 12.5px;
+        color: var(--text-muted);
+        margin-bottom: 14px;
+      }
+      .identity-actions {
+        display: flex;
+        gap: 7px;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+      }
+      .btn {
+        height: 36px;
+        padding: 0 14px;
+        border-radius: var(--radius-sm);
+        font-family: 'Noto Sans KR', sans-serif;
+        font-size: 12.5px;
+        font-weight: 500;
+        cursor: pointer;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
+        transition: all 0.15s;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        white-space: nowrap;
+      }
+      .btn:hover {
+        background: var(--bg-hover);
+        border-color: var(--border-hover);
+      }
+      .btn-full {
+        width: 100%;
+        justify-content: center;
+      }
+      .btn-yellow {
+        background: var(--yellow);
+        border-color: var(--yellow);
+      }
+      .btn-yellow:hover {
+        background: #e6b800;
+        border-color: #e6b800;
+      }
+      .btn-bm {
+        flex: 1;
+      }
+      .btn-bm.on {
+        background: var(--yellow-light);
+        border-color: var(--yellow-border);
+        color: #7a6000;
+      }
+      .detail-card {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .detail-rows {
+        padding: 2px 0;
+      }
+      .detail-row {
+        display: flex;
+        align-items: flex-start;
+        padding: 10px 16px;
+        border-bottom: 1px solid var(--border);
+      }
+      .detail-row:last-child {
+        border-bottom: none;
+      }
+      .detail-label {
+        width: 68px;
+        flex-shrink: 0;
+        font-size: 11.5px;
+        color: var(--text-muted);
+        font-weight: 500;
+        padding-top: 2px;
+      }
+      .detail-value {
+        flex: 1;
+        font-size: 13px;
+        color: var(--text);
+        min-width: 0;
+      }
+      .detail-value a {
+        color: var(--text);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .folder-card {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 12px 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        text-decoration: none;
+        color: var(--text);
+      }
+      .folder-card:hover {
+        background: var(--bg-hover);
+        border-color: var(--border-hover);
+      }
+      .folder-card-icon {
+        width: 34px;
+        height: 34px;
+        background: var(--yellow-light);
+        border: 1px solid var(--yellow-border);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        flex-shrink: 0;
+      }
+      .folder-card-meta {
+        flex: 1;
+        min-width: 0;
+      }
+      .folder-card-label {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-bottom: 1px;
+      }
+      .folder-card-name {
+        font-size: 13px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .folder-card-arrow {
+        color: var(--text-muted);
+        font-size: 14px;
+      }
+
+      /* ── BOTTOM ACTION BAR (모바일 전용, 기본 숨김) ── */
+      .bottom-action-bar {
+        display: none;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 40px 0 16px;
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%) translateY(8px);
+        background: var(--text);
+        color: #fff;
+        font-size: 13px;
+        padding: 9px 18px;
+        border-radius: 8px;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.22s;
+        z-index: 9999;
+        white-space: nowrap;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* ── MOBILE ── */
+      @media (max-width: 768px) {
+        .page {
+          padding: 16px 16px 96px;
+        }
+
+        /* 브레드크럼 줄이기 */
+        .breadcrumb a:not(:last-of-type):not(:first-of-type) {
+          display: none;
+        }
+        .breadcrumb-sep:not(:last-of-type) {
+          display: none;
+        }
+
+        /* 단일 컬럼 */
+        .layout {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+
+        /* 오른쪽 컬럼 → 맨 위로 */
+        .col-right {
+          order: -1;
+          position: static;
+        }
+
+        /* 아이덴티티 카드 히어로 축소 */
+        .identity-hero {
+          height: 72px;
+          font-size: 36px;
+        }
+
+        /* 데스크탑 버튼 숨김 → 하단 바로 이동 */
+        .identity-actions {
+          display: none;
+        }
+        .col-right > .btn-full {
+          display: none;
+        }
+
+        /* 지도 높이 */
+        .map-mock {
+          height: 220px;
+        }
+
+        /* 영상 썸네일 */
+        .video-thumb {
+          width: 80px;
+          height: 56px;
+        }
+        .video-title {
+          -webkit-line-clamp: 1;
+        }
+
+        /* nav 간소화 */
+        .nav-item:not(.active) {
+          display: none;
+        }
+        .nav-divider {
+          display: none;
+        }
+        .logo {
+          margin-right: 16px;
+        }
+
+        /* ── 하단 고정 액션 바 ── */
+        .bottom-action-bar {
+          display: flex;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          z-index: 200;
+          background: var(--bg);
+          border-top: 1px solid var(--border);
+          padding: 10px 16px;
+          padding-bottom: calc(10px + env(safe-area-inset-bottom));
+          gap: 8px;
+          box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+        }
+        .bar-btn-back {
+          width: 44px;
+          height: 44px;
+          flex-shrink: 0;
+          border: 1px solid var(--border);
+          border-radius: var(--radius-sm);
+          background: var(--bg);
+          color: var(--text-sub);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          font-size: 18px;
+          transition: background 0.15s;
+        }
+        .bar-btn-back:hover {
+          background: var(--bg-hover);
+        }
+        .bar-btn-bm {
+          height: 44px;
+          padding: 0 16px;
+          flex-shrink: 0;
+          border: 1px solid var(--border);
+          border-radius: var(--radius-sm);
+          background: var(--bg);
+          color: var(--text);
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          cursor: pointer;
+          font-family: 'Noto Sans KR', sans-serif;
+          font-size: 13px;
+          font-weight: 500;
+          transition: all 0.15s;
+          white-space: nowrap;
+        }
+        .bar-btn-bm:hover {
+          background: var(--bg-hover);
+        }
+        .bar-btn-bm.on {
+          background: var(--yellow-light);
+          border-color: var(--yellow-border);
+          color: #7a6000;
+        }
+        .bar-btn-gmaps {
+          flex: 1;
+          height: 44px;
+          border: none;
+          border-radius: var(--radius-sm);
+          background: var(--yellow);
+          color: var(--text);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          cursor: pointer;
+          font-family: 'Noto Sans KR', sans-serif;
+          font-size: 13.5px;
+          font-weight: 600;
+          transition: background 0.15s;
+        }
+        .bar-btn-gmaps:hover {
+          background: #e6b800;
+        }
+
+        /* 토스트를 바 위로 올리기 */
+        .toast {
+          bottom: 80px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- TOPBAR -->
+    <nav class="topbar">
+      <div class="topbar-inner">
+        <a href="#" class="logo">
+          <span style="font-size: 18px">📍</span>
+          <span class="logo-text">HISEULGI <span>MAP</span></span>
+        </a>
+        <div class="nav">
+          <a href="#" class="nav-item">국내 지도</a>
+          <a href="#" class="nav-item">해외 지도</a>
+          <a href="#" class="nav-item">에피소드별 지도</a>
+          <div class="nav-divider"></div>
+          <a href="#" class="nav-item active">마이 지도</a>
+          <a href="#" class="nav-item">이용 안내</a>
+        </div>
+        <div class="nav-right">
+          <button class="btn-topbar">🌙</button>
+          <button class="btn-topbar">🌐 KOR</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- PAGE -->
+    <div class="page">
+      <div class="breadcrumb">
+        <a href="#">홈 화면</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="#">마이 지도</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="#">서울 카페 투어</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">어니언 성수</span>
+      </div>
+
+      <div class="layout">
+        <!-- LEFT: 지도 + 영상 -->
+        <div class="col-left">
+          <div class="map-card">
+            <div class="map-mock">
+              <div class="map-type-row">
+                <button class="map-type-btn active" onclick="setMapType(this)">Map</button>
+                <button class="map-type-btn" onclick="setMapType(this)">Satellite</button>
+              </div>
+              <button class="map-expand-btn">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg>
+              </button>
+              <svg class="map-roads" viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 180 Q160 168 320 180 Q480 192 640 180" stroke="rgba(255,255,255,0.75)" stroke-width="14" fill="none" />
+                <path d="M320 0 Q308 105 320 180 Q332 252 320 360" stroke="rgba(255,255,255,0.72)" stroke-width="11" fill="none" />
+                <path d="M0 88 Q320 93 640 96" stroke="rgba(255,255,255,0.5)" stroke-width="6" fill="none" />
+                <path d="M0 275 Q320 268 640 278" stroke="rgba(255,255,255,0.5)" stroke-width="6" fill="none" />
+                <path d="M155 0 Q150 180 155 360" stroke="rgba(255,255,255,0.4)" stroke-width="5" fill="none" />
+                <path d="M482 0 Q488 180 482 360" stroke="rgba(255,255,255,0.4)" stroke-width="5" fill="none" />
+                <rect x="38" y="106" width="90" height="56" rx="5" fill="rgba(190,200,160,0.55)" />
+                <rect x="176" y="46" width="112" height="72" rx="5" fill="rgba(190,200,160,0.55)" />
+                <rect x="368" y="102" width="90" height="62" rx="5" fill="rgba(190,200,160,0.55)" />
+                <rect x="428" y="206" width="112" height="78" rx="5" fill="rgba(190,200,160,0.55)" />
+                <rect x="38" y="210" width="90" height="72" rx="5" fill="rgba(190,200,160,0.55)" />
+                <rect x="176" y="224" width="112" height="88" rx="5" fill="rgba(190,200,160,0.55)" />
+              </svg>
+              <div class="map-pin-wrap">
+                <div class="map-pin"><div class="map-pin-inner"></div></div>
+              </div>
+            </div>
+            <div class="address-bar">
+              <span class="address-zip">04799</span>
+              <span class="address-full">서울특별시 성동구 아차산로9길 8</span>
+              <button class="address-copy-btn" onclick="copyAddr()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" />
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="video-card">
+            <div class="card-header">▶ 영상 등장 정보</div>
+            <div class="video-item" onclick="openVideo()">
+              <div class="video-thumb">
+                <div class="video-thumb-mock">▶</div>
+                <div class="video-play-overlay">
+                  <div class="play-btn">
+                    <svg width="10" height="12" viewBox="0 0 10 12" fill="var(--text)"><polygon points="0,0 10,6 0,12" /></svg>
+                  </div>
+                </div>
+              </div>
+              <div class="video-info">
+                <div class="video-title">슬기의 성수동 카페 투어 🏠 혼자 즐기는 서울 카페 VLOG</div>
+                <div class="video-date">2024.06.22</div>
+              </div>
+              <button
+                class="timestamp-btn"
+                onclick="
+                  event.stopPropagation();
+                  openTimestamp();
+                "
+              >
+                ▶ 12:34
+              </button>
+            </div>
+            <div class="video-hint">타임스탬프 버튼을 클릭하면 해당 장면부터 시청이 가능합니다</div>
+          </div>
+        </div>
+
+        <!-- RIGHT: 장소 정보 (모바일에서 맨 위로 올라옴) -->
+        <div class="col-right">
+          <div class="identity-card">
+            <div class="identity-body">
+              <div class="identity-tags">
+                <span class="tag tag-region">📍 성동구, 서울</span>
+                <span class="tag">🇰🇷 국내</span>
+              </div>
+              <div class="place-name">어니언 성수</div>
+              <div class="place-name-sub">Onion Seongsu</div>
+              <!-- 데스크탑에서만 보이는 버튼 -->
+              <div class="identity-actions">
+                <button class="btn btn-bm" id="btn-bm-desktop" onclick="toggleBookmark()">🔖 북마크하기</button>
+                <button class="btn btn-yellow btn-full" onclick="openGmaps()">🗺 구글 지도</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="detail-card">
+            <div class="card-header" style="padding: 11px 16px; border-bottom: 1px solid var(--border)">🔶 장소 정보</div>
+            <div class="detail-rows">
+              <div class="detail-row">
+                <span class="detail-label">영업 시간</span>
+                <span class="detail-value">09:00 – 22:00 (연중무휴)</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">전화</span>
+                <span class="detail-value"><a href="tel:0264660630">02-6466-0630</a></span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">웹사이트</span>
+                <span class="detail-value"><a href="#" onclick="return false;">cafe.naver.com/onieon</a></span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">메모</span>
+                <span class="detail-value" style="color: var(--text-sub)">슬기가 앉았던 2층 창가 자리. 인더스트리얼 인테리어로 유명.</span>
+              </div>
+            </div>
+          </div>
+
+          <a href="#" class="folder-card" onclick="return false;">
+            <div class="folder-card-icon">☕</div>
+            <div class="folder-card-meta">
+              <div class="folder-card-label">저장된 폴더</div>
+              <div class="folder-card-name">서울 카페 투어</div>
+            </div>
+            <span class="folder-card-arrow">›</span>
+          </a>
+
+          <!-- 데스크탑 뒤로가기 -->
+          <button class="btn btn-full" onclick="history.back()">← 장소 목록으로</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">© 2026 ov. All rights reserved</div>
+
+    <!-- 모바일 하단 고정 액션 바 -->
+    <div class="bottom-action-bar">
+      <button class="bar-btn-back" onclick="history.back()" title="뒤로가기">←</button>
+      <button class="bar-btn-bm" id="btn-bm-mobile" onclick="toggleBookmark()">🔖 북마크하기</button>
+      <button class="bar-btn-gmaps" onclick="openGmaps()">🗺 구글 지도에서 보기</button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      function setMapType(el) {
+        document.querySelectorAll('.map-type-btn').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+      }
+
+      let bm = false;
+      function toggleBookmark() {
+        bm = !bm;
+        const label = bm ? '🔖 북마크 해제' : '🔖 북마크하기';
+        const d = document.getElementById('btn-bm-desktop');
+        const m = document.getElementById('btn-bm-mobile');
+        d.textContent = label;
+        m.textContent = label;
+        d.classList.toggle('on', bm);
+        m.classList.toggle('on', bm);
+        showToast(bm ? '북마크에 추가했어요' : '북마크를 해제했어요');
+      }
+
+      function copyAddr() {
+        navigator.clipboard?.writeText('서울특별시 성동구 아차산로9길 8');
+        showToast('주소를 복사했어요');
+      }
+
+      function openVideo() {
+        showToast('영상 페이지로 이동합니다');
+      }
+      function openTimestamp() {
+        showToast('해당 타임스탬프로 이동합니다');
+      }
+      function openGmaps() {
+        showToast('구글 지도로 이동합니다');
+      }
+
+      function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2200);
+      }
+    </script>
+  </body>
+</html>

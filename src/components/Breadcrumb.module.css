@@ -1,0 +1,47 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.8rem;
+  font-size: 0.75rem;
+  line-height: 1.7;
+  animation: slideUp 0.75s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.separator {
+  margin: 0 0.8125rem;
+  color: var(--color-font-sub-light);
+  transition: color var(--transition);
+  user-select: none;
+}
+
+.link:link,
+.link:visited {
+  width: fit-content;
+  display: inline-block;
+  color: var(--color-font-sub-medium);
+  transition: color var(--transition);
+}
+
+.link:hover,
+.link:active {
+  color: var(--color-font);
+}
+
+.current {
+  font-weight: 500;
+  user-select: none;
+  transition: color var(--transition);
+}

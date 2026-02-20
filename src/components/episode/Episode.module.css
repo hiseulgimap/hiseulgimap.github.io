@@ -1,0 +1,46 @@
+.grid,
+.list {
+  min-height: calc(100dvh - (3.5rem + 2rem + 2rem + 3rem + 5rem + 30px + 36px + 92px + 24px + var(--header-height)));
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: min-content;
+  gap: 1rem;
+  animation: slideUp 0.75s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(25%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 62.5rem) {
+  .list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 51.25rem) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 40rem) {
+  .list {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 33.75rem) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,44 @@
+#social {
+  margin-top: 3.5rem;
+}
+
+.title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  transition: color var(--transition);
+  animation: slideUp 0.75s ease;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: 1rem;
+  animation: slideUp 0.75s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 48rem) {
+  .title {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 42.5rem) {
+  .grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+}

@@ -1,0 +1,70 @@
+.filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.folder-btn {
+  width: 2rem;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  aspect-ratio: 1;
+  border: var(--border-solid);
+  border-radius: 0.375rem;
+  transition:
+    border-color var(--transition),
+    background-color var(--transition);
+}
+
+.folder-btn svg {
+  color: var(--color-font-sub-dark);
+}
+
+.folder-btn.active svg {
+  color: var(--color-primary-base);
+}
+
+.folder-btn:hover {
+  border-color: var(--color-primary-50);
+  background-color: var(--color-primary-15);
+}
+
+.folder-btn:hover svg {
+  color: var(--color-primary-dark);
+}
+
+.favorite {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: color var(--transition);
+}
+
+.favorite svg {
+  color: var(--color-font-sub-medium);
+}
+
+.favorite.active svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--color-primary-base);
+}
+
+@media screen and (max-width: 48.75rem) {
+  .filter {
+    justify-content: flex-start;
+    gap: 0.5rem;
+  }
+
+  .folder-btn {
+    display: flex;
+  }
+
+  .favorite {
+    margin-left: auto;
+  }
+}

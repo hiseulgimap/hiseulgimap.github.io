@@ -1,0 +1,27 @@
+.btn {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.25rem;
+  background-color: var(--color-content-sub-light);
+  transition:
+    background-color var(--transition),
+    transform var(--transition);
+}
+
+.btn:hover,
+.btn:active {
+  background-color: var(--color-content-sub-hover);
+}
+
+.btn:active {
+  transform: scale(0.825);
+}
+
+.btn svg {
+  width: 0.8125rem;
+  height: 0.8125rem;
+  color: var(--color-font-sub-medium);
+}

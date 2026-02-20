@@ -1,0 +1,15 @@
+.list > li {
+  line-height: 1.6;
+  list-style-type: disc;
+  transition: color var(--transition);
+}
+
+.list > li:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
+@media screen and (max-width: 48rem) {
+  .list > li {
+    font-size: 0.8125rem;
+  }
+}

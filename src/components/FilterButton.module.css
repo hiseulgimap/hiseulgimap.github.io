@@ -1,0 +1,52 @@
+.btn {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.375rem;
+  background-color: transparent;
+  transition: background-color var(--transition);
+  animation: slideUp 0.75s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.btn svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--color-sub-font);
+}
+
+.btn:hover,
+.btn.active {
+  background-color: var(--color-content-sub-light);
+}
+
+.btn:active {
+  background-color: var(--color-content-sub-hover);
+}
+
+@media screen and (max-width: 48rem) {
+  .btn {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .btn svg {
+    width: 0.8125rem;
+    height: 0.8125rem;
+    color: var(--color-sub-font);
+  }
+}

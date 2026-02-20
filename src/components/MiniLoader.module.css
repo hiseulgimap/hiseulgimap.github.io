@@ -1,0 +1,55 @@
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 2rem 0;
+  color: var(--color-font-sub-dark);
+  font-size: 0.8125rem;
+  transition: color var(--transition);
+}
+
+.loader svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  transform-origin: center;
+  animation: rotate 2s linear infinite;
+}
+
+.loader circle {
+  fill: none;
+  stroke: var(--color-primary-base);
+  stroke-width: 3;
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  transition: stroke var(--transition);
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 90, 200;
+    stroke-dashoffset: -35px;
+  }
+
+  100% {
+    stroke-dashoffset: -125px;
+  }
+}
+
+.text {
+  font-weight: 500;
+  transition: color var(--transition);
+}

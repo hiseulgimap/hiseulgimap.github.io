@@ -1,0 +1,245 @@
+.title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  transition: color var(--transition);
+}
+
+.text {
+  display: block;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  border-bottom: var(--border-solid);
+  border-color: var(--color-border-light);
+  transition:
+    color var(--transition),
+    border-color var(--transition);
+}
+
+.col--1 {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.icon-wrap {
+  height: fit-content;
+  position: relative;
+}
+
+.icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.375rem;
+  background-color: var(--color-content-sub-light);
+  transition: background-color var(--transition);
+}
+
+.icon svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.paletteBtn {
+  width: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.375rem;
+  padding: 0.375rem 0;
+  font-size: 0.7rem;
+  border: var(--border-solid);
+  border-radius: 0.25rem;
+  transition:
+    color var(--transition),
+    background-color var(--transition);
+}
+
+.form {
+  width: 100%;
+}
+
+.input-row:nth-child(1) {
+  min-height: 4.625rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.input-row:nth-child(2) {
+  margin-top: 0.375rem;
+  margin-bottom: 2.5rem;
+  text-align: end;
+}
+
+.input-row > label {
+  margin-bottom: 0.25rem;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+.input-row > input {
+  width: 100%;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  border: var(--border-solid);
+  border-radius: 0.375rem;
+  transition:
+    color var(--transition),
+    border-color var(--transition);
+}
+
+.input-row > input:focus {
+  border-color: var(--color-primary-base);
+}
+
+.favorite {
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  transition: color var(--transition);
+}
+
+.favorite svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--color-font-sub-medium);
+}
+
+.favorite.active svg {
+  color: var(--color-primary-base);
+}
+
+.action {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.action > button {
+  padding: 1rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: var(--border-solid);
+  border-radius: 0.5rem;
+  transition:
+    color var(--transition),
+    border-color var(--transition),
+    background-color var(--transition);
+}
+
+button.primary-btn {
+  color: #fff;
+  border-color: var(--color-primary-base);
+  background-color: var(--color-primary-base);
+}
+
+button.primary-btn:hover {
+  border-color: var(--color-primary-dark);
+  background-color: var(--color-primary-dark);
+}
+
+button.secondary-btn:hover {
+  border-color: var(--color-border-medium);
+}
+
+.palette-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.25rem;
+  padding: 1rem;
+  position: absolute;
+  top: calc(100% + 1rem);
+  border: var(--border-solid);
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow);
+  background-color: var(--color-content-sub-light-max);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    background-color var(--transition);
+}
+
+.color {
+  width: 1.15rem;
+  border: 2px solid var(--color-content-sub-light);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transition: border-color var(--transition);
+}
+
+.color.active {
+  border-color: var(--color-border-medium);
+}
+
+.close-palette {
+  width: 1.15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-font-sub-dark);
+  font-size: 0.75rem;
+  font-weight: 600;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: var(--color-content-sub-active);
+  transition:
+    color var(--transition),
+    background-color var(--transition);
+}
+
+@media screen and (max-width: 48rem) {
+  .input-row:nth-child(1) {
+    min-height: unset;
+  }
+
+  .title {
+    font-size: 0.875rem;
+  }
+
+  .text {
+    margin-bottom: 1.25rem;
+    font-size: 0.625rem;
+  }
+
+  .icon {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .icon svg {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .favorite {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .action > button {
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: var(--border-solid);
+    border-radius: 0.5rem;
+    transition:
+      color var(--transition),
+      border-color var(--transition),
+      background-color var(--transition);
+  }
+
+  .paletteBtn {
+    width: 3.5rem;
+    padding: 0.375rem 0;
+    font-size: 0.625rem;
+  }
+}

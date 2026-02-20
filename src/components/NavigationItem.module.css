@@ -1,0 +1,41 @@
+.nav:link,
+.nav:visited {
+  height: 2rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 0.375rem;
+  background-color: transparent;
+  transition:
+    color var(--transition),
+    background-color var(--transition);
+}
+
+.nav:hover,
+.nav:active {
+  background-color: var(--color-content-sub-light);
+}
+
+.nav.active:link,
+.nav.active:visited {
+  background-color: var(--color-content-sub-light);
+}
+
+.nav.sub:link,
+.nav.sub:visited {
+  color: var(--color-font-sub-medium);
+  font-weight: 400;
+}
+
+.nav.sub:hover,
+.nav.sub:active {
+  color: var(--color-font-sub-dark);
+}
+
+.nav.sub.active:link,
+.nav.sub.active:visited {
+  color: var(--color-font-sub-dark);
+}

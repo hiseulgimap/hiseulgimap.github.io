@@ -1,0 +1,12 @@
+#episode {
+  display: grid;
+  grid-template-columns: 24rem 1fr;
+  gap: 1rem;
+}
+
+.col--left,
+.col--right {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

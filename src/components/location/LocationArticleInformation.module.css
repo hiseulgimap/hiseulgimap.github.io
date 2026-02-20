@@ -1,0 +1,134 @@
+.information {
+  border: var(--border-solid);
+  border-radius: 0.75rem;
+  transition: border-color var(--transition);
+  animation: slideUp 0.55s ease;
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.tab {
+  padding: 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-bottom: var(--border-solid);
+  background-color: var(--color-content-sub-light-max);
+  transition:
+    color var(--transition),
+    border-color var(--transition),
+    background-color var(--transition);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 3.325rem 1fr;
+  gap: 0.25rem;
+  padding: 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition:
+    color var(--transition),
+    border-color var(--transition);
+}
+
+.row:not(:last-child) {
+  border-bottom: var(--border-solid);
+}
+
+.sub {
+  color: var(--color-font-sub-medium);
+  font-size: 0.725rem;
+  line-height: 1.4;
+  transition: color var(--transition);
+}
+
+.row:has(.socials) .sub {
+  height: 1.284375rem;
+  display: flex;
+  align-items: center;
+}
+
+.main,
+.main:link,
+.main:visited {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.375rem;
+  font-weight: 500;
+  line-height: 1.4;
+  transition: color var(--transition);
+}
+
+.main:link,
+.main:visited {
+  text-decoration: underline;
+}
+
+.main:hover,
+.main:active {
+  text-decoration: none;
+}
+
+.main button {
+  margin-top: 0.125rem;
+}
+
+.main svg {
+  color: var(--color-font-sub-medium);
+  opacity: 0.75;
+}
+
+.main button:hover svg {
+  color: var(--color-font-sub-dark);
+}
+
+.highlight {
+  display: inline-block;
+  margin-right: 0.375rem;
+  color: var(--color-primary-base);
+}
+
+.socials {
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.social,
+.social:link,
+.social:visited {
+  width: fit-content;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.05rem;
+  padding: 0.125rem 0.325rem;
+  font-size: 0.65rem;
+  border: var(--border-solid);
+  border-radius: 1000px;
+  transition:
+    color var(--transition),
+    border-color var(--transition),
+    background-color var(--transition);
+}
+
+@media screen and (max-width: 50rem) {
+  .main,
+  .main:link,
+  .main:visited {
+    font-size: 0.7rem;
+  }
+}

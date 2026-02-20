@@ -1,0 +1,42 @@
+.menu:link,
+.menu:visited {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 1rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color var(--transition);
+}
+
+.menu:not(:last-child) {
+  margin-bottom: 0.375rem;
+}
+
+.menu:hover,
+.menu:active {
+  background-color: var(--color-content-sub-light);
+}
+
+.menu:not(.active) > .icon svg {
+  color: var(--color-font-sub-medium);
+}
+
+.menu.active > .content,
+.menu.active > .icon svg {
+  color: var(--color-primary-dark);
+}
+
+.content {
+  font-weight: 500;
+  font-size: 0.8125rem;
+  transition: color var(--transition);
+}
+
+.menu.sub > .content {
+  color: var(--color-font-sub-medium);
+}
+
+.menu.sub:hover > .content,
+.nav.sub:active > .content {
+  color: var(--color-font-sub-dark);
+}

@@ -1,0 +1,46 @@
+#logo:link,
+#logo:visited {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-bebas);
+  transition: transform var(--transition);
+}
+
+#logo:hover {
+  transform: scale(1.065);
+}
+
+#logo:active {
+  transform: scale(0.965);
+}
+
+#logo > img {
+  height: 1rem;
+  margin-right: 0.25rem;
+  margin-bottom: 0.125rem;
+}
+
+.hiseulgi,
+.map {
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: 0.45px;
+  transition: color var(--transition);
+}
+
+.map {
+  display: inline-block;
+  margin-left: 0.25rem;
+  color: var(--color-primary-base);
+}
+
+@media screen and (max-width: 26.875rem) {
+  #logo > img {
+    height: 1.25rem;
+  }
+
+  .hiseulgi,
+  .map {
+    font-size: 1.25rem;
+  }
+}

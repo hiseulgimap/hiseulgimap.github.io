@@ -1,0 +1,25 @@
+.title {
+  margin-bottom: 2rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  transition: color var(--transition);
+  animation: slideUp 0.75s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 26.875rem) {
+  .title {
+    font-size: 1.15rem;
+  }
+}

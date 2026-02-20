@@ -1,0 +1,33 @@
+.btn {
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: var(--border-solid);
+  border-radius: 1000px;
+  transition:
+    color var(--transition),
+    border-color var(--transition),
+    background-color var(--transition);
+}
+
+.btn:hover {
+  border-color: var(--color-border-medium);
+  background-color: var(--color-content-sub-light-max);
+}
+
+.btn svg {
+  width: 0.75rem;
+  height: 0.75rem;
+  color: var(--color-primary-base);
+}
+
+@media screen and (max-width: 48rem) {
+  .btn {
+    padding: 0.275rem 0.5rem;
+    font-size: 0.625rem;
+  }
+}

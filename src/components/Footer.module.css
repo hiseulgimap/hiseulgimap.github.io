@@ -1,0 +1,29 @@
+#footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0 3rem 0;
+}
+
+.copyright:link,
+.copyright:visited {
+  color: var(--color-font-sub-medium);
+  font-size: 0.7rem;
+  transition: color var(--transition);
+}
+
+.copyright:hover,
+.copyright:active {
+  color: var(--color-font-sub-dark);
+}
+
+.copyright > strong {
+  font-weight: 600;
+}
+
+@media screen and (max-width: 48rem) {
+  .copyright:link,
+  .copyright:visited {
+    font-size: 0.625rem;
+  }
+}
