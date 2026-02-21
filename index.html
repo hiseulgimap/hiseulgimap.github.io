@@ -1,6 +1,11 @@
 <!doctype html>
 <html lang="ko" data-theme="light" data-language="ko" data-list="grid">
   <head>
+    <script>
+      localStorage.list && document.documentElement.setAttribute('data-list', JSON.parse(localStorage.list));
+      localStorage.theme && document.documentElement.setAttribute('data-theme', JSON.parse(localStorage.theme));
+      localStorage.language && document.documentElement.setAttribute('data-language', JSON.parse(localStorage.language));
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
@@ -8,11 +13,6 @@
     <link rel="icon" type="image/png" href="/favicon-64x64.png" sizes="64x64" />
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
     <title>HiSeulgi Map</title>
-    <script>
-      localStorage.list && document.documentElement.setAttribute('data-list', localStorage.list);
-      localStorage.theme && document.documentElement.setAttribute('data-theme', localStorage.theme);
-      localStorage.language && document.documentElement.setAttribute('data-language', localStorage.language);
-    </script>
     <!-- Start Single Page Apps for GitHub Pages -->
     <script type="text/javascript">
       // Single Page Apps for GitHub Pages
@@ -39,8 +39,8 @@
       })(window.location);
     </script>
     <!-- End Single Page Apps for GitHub Pages -->
-    <script type="module" crossorigin src="/assets/index-CmSvRN_G.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-md2wLr80.css">
+    <script type="module" crossorigin src="/assets/index-Bh_klMZv.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CJy5VYcP.css">
   <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
   <body>
     <div id="root"></div>
