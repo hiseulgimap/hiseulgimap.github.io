@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 
-import LoaderFullLayout from '../LoaderFullLayout';
 import MiniLoader from '../MiniLoader';
+
+import LoaderFullLayout from '../../UI/layout/LoaderFullLayout';
 
 import { useLanguage } from '../../hooks/useLanguage';
 

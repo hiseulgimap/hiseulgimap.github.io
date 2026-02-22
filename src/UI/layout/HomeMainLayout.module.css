@@ -1,0 +1,27 @@
+#main {
+  width: 53.75rem;
+  margin: 0 auto;
+  padding: 5.5rem 0;
+  position: relative;
+}
+
+@media screen and (max-width: 68rem) {
+  #main {
+    width: 100%;
+    max-width: 53.75rem;
+    padding: 4.5rem 2rem;
+  }
+}
+
+@media screen and (max-width: 48rem) {
+  #main {
+    max-width: 40rem;
+    padding: 5.75rem 1.25rem;
+  }
+}
+
+@media screen and (max-width: 35rem) {
+  #main {
+    padding: 3.25rem 1.25rem;
+  }
+}

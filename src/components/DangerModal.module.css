@@ -1,0 +1,124 @@
+#danger {
+  position: fixed;
+  z-index: 100;
+}
+
+.backdrop {
+  width: 100%;
+  height: 100dvh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 100;
+}
+
+.container {
+  width: 90dvw;
+  max-width: 32rem;
+  max-height: 80dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.75rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  border: var(--border-solid);
+  border-radius: 1rem;
+  box-shadow: var(--shadow);
+  background-color: var(--color-content);
+  transition:
+    border-color var(--transition),
+    background-color var(--transition);
+  transform: translate(-50%, -50%);
+  z-index: 101;
+  overflow-y: hidden;
+}
+
+.icon svg {
+  width: 5rem;
+  height: 5rem;
+  color: var(--color-red);
+  opacity: 0.65;
+}
+
+.title {
+  display: block;
+  margin: 0.625rem 0 0.875rem 0;
+  font-size: 1.5em;
+  font-weight: 800;
+  line-height: 1.4;
+  transition: color var(--transition);
+}
+
+.content {
+  color: var(--color-font-sub-dark);
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+  transition: color var(--transition);
+}
+
+.actions {
+  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 3.25rem;
+}
+
+.actions button {
+  padding: 1.25rem 1.5rem;
+  font-size: 0.8126rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition:
+    color var(--transition),
+    border-color var(--transition),
+    background-color var(--transition);
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: var(--color-red-medium);
+}
+
+.btn-danger:hover {
+  background-color: var(--color-red-dark);
+}
+
+.btn-cancel {
+  border: var(--border-solid);
+}
+
+.btn-cancel:hover {
+  border-color: var(--color-border-medium);
+}
+
+@media screen and (max-width: 48rem) {
+  .icon svg {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .content {
+    font-size: 0.8125rem;
+  }
+
+  .actions {
+    margin-top: 2rem;
+  }
+
+  .actions button {
+    padding: 1rem 1.25rem;
+    font-size: 0.75rem;
+  }
+}

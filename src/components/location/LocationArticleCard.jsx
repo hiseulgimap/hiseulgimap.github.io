@@ -46,7 +46,7 @@ function LocationArticleCard({ location, bookmarkedLocations }) {
       </BookmarkModal>
       <div className={styles.card}>
         <div className={styles['row--1']}>
-          <span className={styles.category}>{location.categories.emoji}</span>
+          <span className={styles.category}>{location.emoji}</span>
           <div className={styles['badge-wrap']}>
             <span className={styles.city}>
               {location.countries.country_flag} {location.cities[`city_${language}`]}

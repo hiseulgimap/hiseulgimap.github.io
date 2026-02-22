@@ -1,0 +1,29 @@
+.searchlist {
+  margin-bottom: 1.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: color var(--transition);
+  animation: slideUp 0.55s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(5rem);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.searchlist > span {
+  color: var(--color-primary-base);
+}
+
+@media screen and (max-width: 48rem) {
+  .searchlist {
+    font-size: 0.75rem;
+  }
+}

@@ -1,6 +1,11 @@
 <!doctype html>
 <html lang="ko" data-theme="light" data-language="ko" data-list="grid">
   <head>
+    <script>
+      localStorage.list && document.documentElement.setAttribute('data-list', JSON.parse(localStorage.list));
+      localStorage.theme && document.documentElement.setAttribute('data-theme', JSON.parse(localStorage.theme));
+      localStorage.language && document.documentElement.setAttribute('data-language', JSON.parse(localStorage.language));
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />

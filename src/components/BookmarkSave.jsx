@@ -131,24 +131,26 @@ function BookmarkSave({ location, folders, onFolderMode, onClose }) {
             {isKorean ? '새 폴더 만들기' : 'Create a new folder'}
           </button>
         </div>
-        {sortedFolders?.map(folder => {
-          const isDuplicate = duplicateFolderIds.includes(folder.id);
-          const isSelected = selectedFolder.includes(folder.id);
+        <div className={styles['list-content']}>
+          {sortedFolders?.map(folder => {
+            const isDuplicate = duplicateFolderIds.includes(folder.id);
+            const isSelected = selectedFolder.includes(folder.id);
 
-          return (
-            <li key={folder.id}>
-              <button className={isDuplicate ? `${styles.folder} ${styles.notallowed}` : isSelected ? `${styles.folder} ${styles.active}` : styles.folder} onClick={() => handleSelectFolder(folder.id)}>
-                <span className={styles.icon}>{folder.isFavorite ? <FolderStarIcon color={`var(--color-folder-${folder.color}-base)`} /> : <FolderIcon color={`var(--color-folder-${folder.color}-base)`} />}</span>
-                <div className={styles['folder-title--wrap']}>
-                  <h4 className={styles['folder-title']}>
-                    <span className="line-clamp line--1">{folder.folderName}</span>
-                  </h4>
-                  <time className={styles['folder-date']}>{formatDate(folder.created_at)}</time>
-                </div>
-              </button>
-            </li>
-          );
-        })}
+            return (
+              <li key={folder.id}>
+                <button className={isDuplicate ? `${styles.folder} ${styles.notallowed}` : isSelected ? `${styles.folder} ${styles.active}` : styles.folder} onClick={() => handleSelectFolder(folder.id)}>
+                  <span className={styles.icon}>{folder.isFavorite ? <FolderStarIcon color={`var(--color-folder-${folder.color}-base)`} /> : <FolderIcon color={`var(--color-folder-${folder.color}-base)`} />}</span>
+                  <div className={styles['folder-title--wrap']}>
+                    <h4 className={styles['folder-title']}>
+                      <span className="line-clamp line--1">{folder.folderName}</span>
+                    </h4>
+                    <time className={styles['folder-date']}>{formatDate(folder.created_at)}</time>
+                  </div>
+                </button>
+              </li>
+            );
+          })}
+        </div>
       </ul>
       <footer className={styles.action}>
         <button className={!selectedFolder.length ? `${styles['primary-btn']} ${styles.disabled}` : styles['primary-btn']} onClick={handleSave}>

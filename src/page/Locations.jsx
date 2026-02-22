@@ -1,11 +1,12 @@
 import { useParams } from 'react-router-dom';
 
 import Location from '../components/location/Location';
-import LoaderFullLayout from '../components/LoaderFullLayout';
 import LocationCategory from '../components/location/LocationCategory';
 import MiniLoader from '../components/MiniLoader';
 import Pagination from '../components/Pagination';
+import Searchlist from '../components/Searchlist';
 
+import LoaderFullLayout from '../UI/layout/LoaderFullLayout';
 import LocationHeaderLayout from '../UI/layout/LocationHeaderLayout';
 
 import { useLocationsByCategory } from '../service/locations/useLocationsByCategory';
@@ -32,6 +33,7 @@ function Locations() {
     <>
       <LocationHeaderLayout title_ko={title_ko} title_en={title_en} />
       <LocationCategory />
+      <Searchlist count={count} />
       <Location locations={locations} />
       <Pagination count={count} size={LOCATION_PAGE_SIZE} />
     </>

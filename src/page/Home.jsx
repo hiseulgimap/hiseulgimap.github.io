@@ -1,14 +1,14 @@
-import MyTourSummary from '../components/MyMapSummary';
-import Social from '../components/Social';
-import Statistics from '../components/Statistics';
+import Footer from '../components/Footer';
+import Hero from '../components/Hero';
+import RecentLocation from '../components/RecentLocation';
 
 function Home() {
   return (
-    <div>
-      <Statistics />
-      <MyTourSummary />
-      <Social />
-    </div>
+    <>
+      <Hero />
+      <RecentLocation />
+      <Footer />
+    </>
   );
 }
 

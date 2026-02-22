@@ -16,15 +16,17 @@
 
 .container {
   width: 90dvw;
-  max-width: 40rem;
+  max-width: 45rem;
   position: fixed;
   top: 50%;
   left: 50%;
+  border: var(--border-solid);
   border-radius: 1rem;
   box-shadow: var(--shadow);
   background-color: var(--color-content);
   transform: translate(-50%, -50%);
   transition:
+    border-color var(--transition),
     box-shadow var(--transition),
     background-color var(--transition);
   z-index: 9999999999;
@@ -149,6 +151,14 @@
   .info-title {
     margin-bottom: 0.5rem;
     font-size: 0.75rem;
+  }
+
+  .title {
+    font-size: 0.75rem;
+  }
+
+  .date {
+    font-size: 0.6rem;
   }
 
   .timestamp {

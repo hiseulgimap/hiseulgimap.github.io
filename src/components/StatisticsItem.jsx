@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
+import CountUp from 'react-countup';
 
 import styles from './StatisticsItem.module.css';
-import CountUp from 'react-countup';
 
 function StatisticsItem({ emoji, title, count, to }) {
   return (

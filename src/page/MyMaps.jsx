@@ -1,5 +1,5 @@
-import MyMap from '../components/MyMap';
-import MyMapNotice from '../components/MyMapNotice';
+import MyMap from '../components/mymap/MyMap';
+import MyMapNotice from '../components/mymap/MyMapNotice';
 import PageTitle from '../components/PageTitle';
 
 function MyMaps() {

@@ -1,6 +1,6 @@
 #main {
   width: var(--width);
-  min-height: calc(100dvh - 4.625rem - 5.75rem - 3.5rem * 2);
+  min-height: calc(100dvh - var(--header-height) - 4.1875rem - 3.5rem * 2 - 2px);
   margin: 3.5rem auto;
   position: relative;
 }

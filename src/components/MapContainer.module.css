@@ -1,0 +1,16 @@
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  color: var(--color-font-sub-dark);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.7;
+  text-align: center;
+  background-color: var(--color-content-sub-light);
+  transition:
+    color var(--transition),
+    background-color var(--transition);
+}

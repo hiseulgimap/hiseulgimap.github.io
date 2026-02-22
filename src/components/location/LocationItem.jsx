@@ -19,7 +19,9 @@ function LocationItem({ order, location }) {
         <span className={styles.num}>{order}</span>
         <div className={styles.column}>
           <div className={styles['title-wrap']}>
-            <h4 className={styles.title}>{location[`name_${language}`]}</h4>
+            <h4 className={styles.title}>
+              {location.emoji} {location[`name_${language}`]}
+            </h4>
             <p className={styles.city}>
               <span>{location.cities[`city_${language}`]}, </span>
               <span>{location.countries[`country_${language}`]}</span>

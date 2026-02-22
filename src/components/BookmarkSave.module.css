@@ -26,6 +26,13 @@
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 1.25rem;
+  padding: 1rem;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  background-color: var(--color-content-sub-light-max);
+  transition: background-color var(--transition);
+  z-index: 9;
 }
 
 .sort-wrap {
@@ -140,7 +147,8 @@
 }
 
 .list {
-  padding: 1rem;
+  display: grid;
+  grid-template-rows: auto 1fr;
   border: var(--border-solid);
   border-color: var(--color-content-sub-light);
   border-radius: 0.45rem;
@@ -152,7 +160,12 @@
   overflow-y: scroll;
 }
 
-.list > li:not(:last-child) {
+.list-content {
+  padding: 1rem;
+  padding-top: 0;
+}
+
+.list-content > li:not(:last-child) {
   margin-bottom: 0.75rem;
 }
 

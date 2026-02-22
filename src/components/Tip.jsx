@@ -1,12 +1,13 @@
 import { useLanguage } from '../hooks/useLanguage';
 import { useTips } from '../service/tips/useTips';
 
-import styles from './Tip.module.css';
 import TipPick from './TipPick';
 import TipTotalComment from './TipTotalComment';
 
-function Tip() {
-  const { tips, isLoading } = useTips();
+import styles from './Tip.module.css';
+
+function Tip({ id }) {
+  const { tips, isLoading } = useTips(id);
   const { language, isKorean } = useLanguage();
 
   if (isLoading || !tips?.length) return null;

@@ -1,6 +1,6 @@
 import Breadcrumb from '../components/BreadCrumb';
 import LocationArticle from '../components/location/LocationArticle';
-import LocationResponsiveArticle from '../components/location/LocationResponsiveArticle';
+import LocationMobileArticle from '../components/location/LocationMobileArticle';
 
 import { useLocation } from '../service/locations/useLocation';
 import { useMediaQuery } from '../hooks/useMediaQuery';
@@ -14,7 +14,7 @@ function LocationDetail() {
   return (
     <>
       <Breadcrumb label_ko={location.name_ko} label_en={location.name_en} />
-      {isMobile ? <LocationResponsiveArticle location={location} /> : <LocationArticle location={location} />}
+      {isMobile ? <LocationMobileArticle location={location} /> : <LocationArticle location={location} />}
     </>
   );
 }

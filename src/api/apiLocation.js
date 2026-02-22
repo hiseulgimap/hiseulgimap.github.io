@@ -2,33 +2,6 @@ import supabase from '../service/supabase';
 
 import { LOCATION_PAGE_SIZE } from '../util/constants';
 
-// export async function fetchLocations({ mapType, page = 0, currentCategory, country, cities }) {
-//   const from = (page - 1) * LOCATION_PAGE_SIZE;
-//   const to = from + LOCATION_PAGE_SIZE - 1;
-
-//   const categoryJoin = currentCategory && currentCategory !== 'all' ? 'categories!inner (name_ko, name_en, emoji, slug)' : 'categories (name_ko, name_en, emoji, slug)';
-
-//   let query = supabase.from('locations').select(`*, cities (city_ko, city_en), countries (name_ko, name_en, country_flag), ${categoryJoin}`, { count: 'exact' }).order('id', { ascending: false });
-
-//   // if (mapType === 'KR') query = query.eq('country_code', 'KR');
-//   // else query = query.neq('country_code', 'KR');
-
-//   if (country) query = query.eq('country_code', country);
-//   else {
-//     if (mapType === 'KR') query = query.eq('country_code', 'KR');
-//     else query = query.neq('country_code', 'KR');
-//   }
-
-//   if (currentCategory && currentCategory !== 'all') query = query.eq('categories.slug', currentCategory);
-//   if (cities && cities.length > 0) query = query.in('city_id', cities);
-
-//   const { data, error, count } = await query.range(from, to);
-
-//   if (error) throw new Error(error.message);
-
-//   return { locations: data, count };
-// }
-
 export async function fetchLocations() {
   const { data, error } = await supabase.from('locations').select('*, countries (country_code)');
 
@@ -43,6 +16,7 @@ export async function fetchLocation(id) {
     .select('*, countries (country_ko, country_en, country_flag), cities (city_ko, city_en), categories (category_ko, category_en, emoji), episodes (id, title_ko, title_en, thumbnail_url, published_at, youtube_id)')
     .eq('id', id);
   if (error) throw new Error(error.message);
+
   return data?.at(0);
 }
 
@@ -50,8 +24,9 @@ export async function fetchLocationByIds(id) {
   if (!id) return;
   if (!id.length) return;
 
-  const { data, error } = await supabase.from('locations').select('*').in('id', id).order('id', { ascending: false });
+  const { data, error } = await supabase.from('locations').select('*, categories (category_ko, category_en, emoji), countries (country_ko, country_en), cities (city_ko, city_en)').in('id', id).order('id', { ascending: false });
   if (error) throw new Error(error.message);
+
   return data;
 }
 
@@ -96,9 +71,15 @@ export async function fetchGlobalLocations({ page = 1, currentCategory, country,
 }
 
 export async function fetchLocationsByEpisode(id) {
-  const { data, error } = await supabase.from('locations').select('*').eq('episode_id', id).order('id', { ascending: true });
+  const { data, error } = await supabase.from('locations').select('*, countries (country_ko, country_en, country_flag), cities (city_ko, city_en)').eq('episode_id', id).order('id', { ascending: true });
 
   if (error) throw new Error(error.message);
 
+  return data;
+}
+
+export async function fetchRecentLocations({ size = 6 }) {
+  const { data, error } = await supabase.from('locations').select('*, categories (category_ko, category_en, emoji), countries (country_ko, country_en), cities (city_ko, city_en)').limit(size).order('id', { ascending: false });
+  if (error) throw new Error(error.message);
   return data;
 }

@@ -10,7 +10,7 @@ function LocationArticleVideoRow({ location, onModalOpen, isSub = false }) {
   const navigate = useNavigate();
   const { language, isKorean } = useLanguage();
 
-  const handleVideoRowClick = () => navigate(`/episode/${location.id}`);
+  const handleVideoRowClick = () => navigate(`/episode/${location.episodes.id}`);
 
   const handleTimestampClick = event => {
     event.stopPropagation();

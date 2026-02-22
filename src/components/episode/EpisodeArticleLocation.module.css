@@ -1,0 +1,67 @@
+.location {
+  height: 25rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  border: var(--border-solid);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
+  animation: slideUp 0.55s ease;
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(25%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.header {
+  padding: 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-bottom: var(--border-solid);
+  background-color: var(--color-content-sub-light-max);
+  transition:
+    color var(--transition),
+    border-color var(--transition),
+    background-color var(--transition);
+}
+
+.list-wrap {
+  height: 100%;
+  padding: 0.8125rem;
+  scrollbar-width: none;
+  overflow-y: scroll;
+}
+
+.list {
+  height: 100%;
+  padding: 1rem;
+  border: var(--border-solid);
+  border-radius: 0.5rem;
+  background-color: var(--color-content-sub-light-max);
+  scrollbar-width: none;
+  transition:
+    border-color var(--transition),
+    background-color var(--transition);
+  overflow-y: scroll;
+}
+
+.list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  border-radius: 1000px;
+  background-color: var(--color-content-sub-medium);
+}

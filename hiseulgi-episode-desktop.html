@@ -1,0 +1,998 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EP.12 - HiSeulgi Map</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: -apple-system, 'Noto Sans KR', sans-serif;
+        background: #f7f7f7;
+        color: #111;
+        min-height: 100vh;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ── 헤더 ── */
+      header {
+        background: #fff;
+        border-bottom: 1px solid #e8e8e8;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .header-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 32px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .logo {
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        text-decoration: none;
+        color: #111;
+      }
+      .logo span {
+        color: #f59e0b;
+      }
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        color: #aaa;
+      }
+      .breadcrumb a {
+        color: #aaa;
+        text-decoration: none;
+      }
+      .breadcrumb a:hover {
+        color: #111;
+      }
+      .hbtn {
+        height: 32px;
+        padding: 0 12px;
+        border: 1px solid #e8e8e8;
+        border-radius: 7px;
+        background: #fff;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        color: #111;
+        font-family: inherit;
+      }
+      .hbtn:hover {
+        background: #f5f5f5;
+      }
+
+      /* ── 레이아웃 ──
+     상단: 영상(좌) + 지도(우) 나란히
+     하단: 장소목록(좌) + 사이드바(우)
+  */
+      .page {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 24px 32px 60px;
+      }
+
+      /* 상단 2열 */
+      .top-grid {
+        display: grid;
+        grid-template-columns: 420px 1fr;
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+
+      /* 하단 2열 */
+      .bottom-grid {
+        display: grid;
+        grid-template-columns: 420px 1fr;
+        gap: 14px;
+        align-items: start;
+      }
+
+      /* ── 공통 카드 ── */
+      .card {
+        background: #fff;
+        border: 1px solid #e8e8e8;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .card + .card {
+        margin-top: 12px;
+      }
+      .card-head {
+        padding: 14px 18px 0;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #aaa;
+      }
+      .card-body {
+        padding: 14px 18px 18px;
+      }
+      .card-body.nt {
+        padding-top: 10px;
+      }
+
+      /* ── 영상 카드 ── */
+      .video-wrap {
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: #111;
+        position: relative;
+        cursor: pointer;
+      }
+      .video-wrap iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+      }
+      .video-cover {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .play-btn {
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        padding-left: 4px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        transition: transform 0.15s;
+      }
+      .video-cover:hover .play-btn {
+        transform: scale(1.08);
+      }
+      .video-ep-tag {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: rgba(0, 0, 0, 0.65);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 5px;
+        backdrop-filter: blur(4px);
+      }
+
+      /* 스탯 바 */
+      .stat-bar {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: #f0f0f0;
+        border-top: 1px solid #f0f0f0;
+      }
+      .stat-item {
+        background: #fff;
+        padding: 13px 0;
+        text-align: center;
+      }
+      .stat-num {
+        font-size: 19px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+      }
+      .stat-label {
+        font-size: 11px;
+        color: #aaa;
+        margin-top: 2px;
+        font-weight: 500;
+      }
+
+      /* 히어로 텍스트 */
+      .hero-body {
+        padding: 16px 18px 18px;
+      }
+      .hero-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-bottom: 8px;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 11px;
+        font-weight: 500;
+        padding: 3px 8px;
+        border-radius: 5px;
+        border: 1px solid #e8e8e8;
+        color: #555;
+        background: #fafafa;
+      }
+      .badge.dark {
+        background: #111;
+        border-color: #111;
+        color: #fff;
+      }
+      .badge.yellow {
+        background: #fffbeb;
+        border-color: #fde68a;
+        color: #92400e;
+      }
+      .hero-title {
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: -0.4px;
+        line-height: 1.3;
+      }
+      .hero-date {
+        font-size: 12px;
+        color: #aaa;
+        margin-top: 5px;
+      }
+      .hero-actions {
+        display: flex;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+      .act-btn {
+        height: 32px;
+        padding: 0 12px;
+        border-radius: 7px;
+        border: 1px solid #e8e8e8;
+        background: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: inherit;
+        color: #111;
+        transition: background 0.15s;
+        white-space: nowrap;
+      }
+      .act-btn:hover {
+        background: #f5f5f5;
+      }
+
+      /* ── 지도 카드 ── */
+      .map-card .card-body {
+        padding: 12px 14px 14px;
+      }
+      .map-tabs {
+        display: flex;
+        background: #f5f5f5;
+        border-radius: 7px;
+        padding: 3px;
+        gap: 2px;
+        margin-bottom: 10px;
+      }
+      .map-tab {
+        flex: 1;
+        padding: 7px;
+        border: none;
+        background: transparent;
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #888;
+        cursor: pointer;
+        font-family: inherit;
+        transition: all 0.15s;
+      }
+      .map-tab.active {
+        background: #fff;
+        color: #111;
+        font-weight: 700;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      }
+      .map-box {
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #e8e8e8;
+        height: 300px; /* 크게 */
+        background: #f0f0f0;
+        position: relative;
+      }
+      .map-box iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      .map-placeholder {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: #bbb;
+        font-size: 13px;
+      }
+      .map-note {
+        font-size: 11px;
+        color: #bbb;
+        margin-top: 8px;
+        text-align: center;
+      }
+      .map-open-btn {
+        width: 100%;
+        margin-top: 10px;
+        padding: 9px;
+        border-radius: 7px;
+        border: 1px solid #e8e8e8;
+        background: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: inherit;
+        color: #111;
+        transition: background 0.15s;
+      }
+      .map-open-btn:hover {
+        background: #f5f5f5;
+      }
+
+      /* ── 장소 목록 ── */
+      .place-list {
+        display: flex;
+        flex-direction: column;
+      }
+      .place-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        border-bottom: 1px solid #f5f5f5;
+        cursor: pointer;
+        text-decoration: none;
+        color: inherit;
+        transition: background 0.12s;
+      }
+      .place-row:last-child {
+        border-bottom: none;
+      }
+      .place-row:hover {
+        background: #fafafa;
+      }
+      .place-num {
+        width: 22px;
+        height: 22px;
+        background: #f0f0f0;
+        border-radius: 50%;
+        font-size: 11px;
+        font-weight: 700;
+        color: #888;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .place-icon-sm {
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+      .place-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .place-name {
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .place-sub {
+        font-size: 12px;
+        color: #aaa;
+        margin-top: 2px;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .place-cat {
+        font-size: 11px;
+        color: #888;
+        background: #f5f5f5;
+        border-radius: 4px;
+        padding: 2px 6px;
+        font-weight: 500;
+      }
+      .ts-btn {
+        flex-shrink: 0;
+        background: #111;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: inherit;
+        transition: background 0.15s;
+      }
+      .ts-btn:hover {
+        background: #333;
+      }
+
+      /* ── 우측 사이드바 ── */
+      .sidebar {
+        position: sticky;
+        top: 66px;
+      }
+
+      /* 국가 분포 */
+      .country-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .country-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .country-label {
+        font-size: 13px;
+        font-weight: 500;
+        min-width: 76px;
+      }
+      .progress-track {
+        flex: 1;
+        height: 6px;
+        background: #f0f0f0;
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        border-radius: 3px;
+      }
+      .country-count {
+        font-size: 12px;
+        color: #aaa;
+        font-weight: 600;
+        min-width: 20px;
+        text-align: right;
+      }
+
+      /* 카테고리 + 커뮤니티 나란히 */
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      /* 카테고리 */
+      .cat-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+      .cat-chip {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background: #fafafa;
+        border: 1px solid #eee;
+        border-radius: 7px;
+        padding: 5px 9px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .cat-num {
+        background: #111;
+        color: #fff;
+        border-radius: 4px;
+        padding: 1px 5px;
+        font-size: 10px;
+        font-weight: 700;
+      }
+
+      /* 커뮤니티 */
+      .comm-col {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .comm-btn {
+        flex: 1;
+        padding: 10px 8px;
+        border-radius: 9px;
+        border: 1px solid #e8e8e8;
+        background: #fff;
+        cursor: pointer;
+        font-family: inherit;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        transition: all 0.15s;
+      }
+      .comm-btn:hover {
+        background: #f5f5f5;
+      }
+      .comm-btn.rec-on {
+        background: #fffbeb;
+        border-color: #fde68a;
+      }
+      .comm-btn.visit-on {
+        background: #f0fdf4;
+        border-color: #86efac;
+      }
+      .comm-num {
+        font-size: 18px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+      }
+      .comm-label {
+        font-size: 11px;
+        color: #888;
+        font-weight: 500;
+      }
+
+      /* 코멘트 */
+      .comment-input-wrap {
+        display: flex;
+        gap: 7px;
+      }
+      .comment-input {
+        flex: 1;
+        border: 1px solid #e8e8e8;
+        border-radius: 7px;
+        padding: 8px 11px;
+        font-size: 12px;
+        outline: none;
+        font-family: inherit;
+        background: #fafafa;
+        transition: border-color 0.15s;
+      }
+      .comment-input:focus {
+        border-color: #111;
+        background: #fff;
+      }
+      .comment-submit {
+        background: #111;
+        color: #fff;
+        border: none;
+        border-radius: 7px;
+        padding: 0 12px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .comment-list {
+        margin-top: 12px;
+      }
+      .comment-item {
+        padding: 10px 0;
+        border-bottom: 1px solid #f5f5f5;
+      }
+      .comment-item:last-child {
+        border-bottom: none;
+      }
+      .comment-text {
+        font-size: 13px;
+        line-height: 1.5;
+        color: #222;
+      }
+      .comment-foot {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 5px;
+      }
+      .comment-time {
+        font-size: 11px;
+        color: #ccc;
+      }
+      .comment-report {
+        font-size: 11px;
+        color: #ddd;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        transition: color 0.12s;
+      }
+      .comment-report:hover {
+        color: #f87171;
+      }
+
+      /* 다른 에피소드 */
+      .ep-list {
+        display: flex;
+        flex-direction: column;
+      }
+      .ep-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 0;
+        border-bottom: 1px solid #f5f5f5;
+        cursor: pointer;
+        transition: opacity 0.12s;
+      }
+      .ep-row:last-child {
+        border-bottom: none;
+      }
+      .ep-row:hover {
+        opacity: 0.65;
+      }
+      .ep-thumb {
+        width: 52px;
+        height: 38px;
+        border-radius: 5px;
+        background: #e8e8e8;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        color: #bbb;
+      }
+      .ep-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .ep-title {
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.3;
+      }
+      .ep-date {
+        font-size: 11px;
+        color: #aaa;
+        margin-top: 2px;
+      }
+      .ep-arrow {
+        color: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-inner">
+        <a href="#" class="logo">HISEULGI <span>MAP</span></a>
+        <div class="breadcrumb">
+          <a href="#">에피소드</a>
+          <span style="color: #ddd">/</span>
+          <span>EP.12</span>
+        </div>
+        <button class="hbtn">↑ 공유</button>
+      </div>
+    </header>
+
+    <div class="page">
+      <!-- ── 상단: 영상 + 지도 ── -->
+      <div class="top-grid">
+        <!-- 영상 카드 -->
+        <div class="card">
+          <div class="video-wrap" id="videoWrap" onclick="loadVideo()">
+            <div class="video-cover" id="videoCover">
+              <div class="play-btn">▶</div>
+            </div>
+            <div class="video-ep-tag">EP.12</div>
+          </div>
+          <div class="stat-bar">
+            <div class="stat-item">
+              <div class="stat-num">6</div>
+              <div class="stat-label">등장 장소</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">2</div>
+              <div class="stat-label">방문 국가</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">4</div>
+              <div class="stat-label">도시</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num">38:24</div>
+              <div class="stat-label">영상 길이</div>
+            </div>
+          </div>
+          <div class="hero-body">
+            <div class="hero-top">
+              <div>
+                <div class="badges">
+                  <span class="badge dark">EP.12</span>
+                  <span class="badge">🇯🇵 일본</span>
+                  <span class="badge">🇰🇷 한국</span>
+                  <span class="badge yellow">📍 6곳 등장</span>
+                </div>
+                <h1 class="hero-title">J 시청 금지🚫 20년지기 친구들과 도쿄 여행</h1>
+                <div class="hero-date">2024.03.15 업로드</div>
+              </div>
+              <div class="hero-actions">
+                <button class="act-btn" id="recActBtn" onclick="toggleRec()">👍 추천 24</button>
+                <button class="act-btn" id="visitActBtn" onclick="toggleVisit()">✅ 방문 8</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 지도 카드 -->
+        <div class="card map-card">
+          <div class="card-head">등장 장소 지도</div>
+          <div class="card-body">
+            <div class="map-tabs">
+              <button class="map-tab" id="tabNaver" onclick="switchMap('naver')">🇰🇷 네이버 지도</button>
+              <button class="map-tab active" id="tabGoogle" onclick="switchMap('google')">🌍 구글 맵</button>
+            </div>
+            <div class="map-box">
+              <div class="map-placeholder">
+                <span style="font-size: 32px">🗺️</span>
+                <span>지도 로딩 중</span>
+              </div>
+            </div>
+            <p class="map-note">국내 장소는 네이버 지도, 국외는 구글 맵 권장</p>
+            <button class="map-open-btn">↗ 지도 앱에서 전체 보기</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 하단: 장소목록 + 사이드바 ── -->
+      <div class="bottom-grid">
+        <!-- 장소 목록 -->
+        <div>
+          <div class="card">
+            <div class="card-head">등장 장소</div>
+            <div class="place-list">
+              <a class="place-row" href="#">
+                <div class="place-num">1</div>
+                <div class="place-icon-sm">🍽️</div>
+                <div class="place-info">
+                  <div class="place-name">히로키</div>
+                  <div class="place-sub"><span>🇯🇵 시모키타자와, 도쿄</span><span class="place-cat">식당</span></div>
+                </div>
+                <button class="ts-btn">▶ 12:26</button>
+              </a>
+              <a class="place-row" href="#">
+                <div class="place-num">2</div>
+                <div class="place-icon-sm">☕</div>
+                <div class="place-info">
+                  <div class="place-name">루트 코피</div>
+                  <div class="place-sub"><span>🇯🇵 시부야, 도쿄</span><span class="place-cat">카페</span></div>
+                </div>
+                <button class="ts-btn">▶ 18:03</button>
+              </a>
+              <a class="place-row" href="#">
+                <div class="place-num">3</div>
+                <div class="place-icon-sm">🛍️</div>
+                <div class="place-info">
+                  <div class="place-name">빔스 시부야</div>
+                  <div class="place-sub"><span>🇯🇵 시부야, 도쿄</span><span class="place-cat">쇼핑</span></div>
+                </div>
+                <button class="ts-btn">▶ 22:47</button>
+              </a>
+              <a class="place-row" href="#">
+                <div class="place-num">4</div>
+                <div class="place-icon-sm">🏨</div>
+                <div class="place-info">
+                  <div class="place-name">더 게이트 호텔</div>
+                  <div class="place-sub"><span>🇯🇵 아사쿠사, 도쿄</span><span class="place-cat">숙소</span></div>
+                </div>
+                <button class="ts-btn">▶ 27:15</button>
+              </a>
+              <a class="place-row" href="#">
+                <div class="place-num">5</div>
+                <div class="place-icon-sm">🍜</div>
+                <div class="place-info">
+                  <div class="place-name">마제멘 이치류</div>
+                  <div class="place-sub"><span>🇯🇵 신주쿠, 도쿄</span><span class="place-cat">식당</span></div>
+                </div>
+                <button class="ts-btn">▶ 31:08</button>
+              </a>
+              <a class="place-row" href="#">
+                <div class="place-num">6</div>
+                <div class="place-icon-sm">🍵</div>
+                <div class="place-info">
+                  <div class="place-name">온유재</div>
+                  <div class="place-sub"><span>🇰🇷 종로구, 서울</span><span class="place-cat">카페</span></div>
+                </div>
+                <button class="ts-btn">▶ 35:50</button>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 사이드바 -->
+        <div class="sidebar">
+          <!-- 국가 + 카테고리 + 커뮤니티 -->
+          <div class="card">
+            <div class="card-head">국가별 장소</div>
+            <div class="card-body nt">
+              <div class="country-list">
+                <div class="country-row">
+                  <div class="country-label">🇯🇵 일본</div>
+                  <div class="progress-track"><div class="progress-fill" style="width: 83%; background: #111"></div></div>
+                  <div class="country-count">5</div>
+                </div>
+                <div class="country-row">
+                  <div class="country-label">🇰🇷 한국</div>
+                  <div class="progress-track"><div class="progress-fill" style="width: 17%; background: #bbb"></div></div>
+                  <div class="country-count">1</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 카테고리 & 커뮤니티 나란히 -->
+          <div class="two-col" style="margin-top: 12px">
+            <div class="card">
+              <div class="card-head">카테고리</div>
+              <div class="card-body nt">
+                <div class="cat-grid">
+                  <div class="cat-chip">🍽️ 식당 <span class="cat-num">2</span></div>
+                  <div class="cat-chip">☕ 카페 <span class="cat-num">2</span></div>
+                  <div class="cat-chip">🛍️ 쇼핑 <span class="cat-num">1</span></div>
+                  <div class="cat-chip">🏨 숙소 <span class="cat-num">1</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-head">커뮤니티</div>
+              <div class="card-body nt">
+                <div class="comm-col">
+                  <button class="comm-btn" id="recBtn" onclick="toggleRec()">
+                    <div class="comm-num" id="recNum">24</div>
+                    <div class="comm-label">👍 추천해요</div>
+                  </button>
+                  <button class="comm-btn" id="visitBtn" onclick="toggleVisit()">
+                    <div class="comm-num" id="visitNum">8</div>
+                    <div class="comm-label">✅ 가봤어요</div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 코멘트 -->
+          <div class="card" style="margin-top: 12px">
+            <div class="card-head">코멘트</div>
+            <div class="card-body nt">
+              <div class="comment-input-wrap">
+                <input class="comment-input" type="text" placeholder="한 줄 남겨보세요" maxlength="100" id="commentInput" />
+                <button class="comment-submit" onclick="addComment()">등록</button>
+              </div>
+              <div class="comment-list" id="commentList">
+                <div class="comment-item">
+                  <div class="comment-text">히로키 정말 맛있어요! 줄 서는 거 감안하고 가세요 🍱</div>
+                  <div class="comment-foot">
+                    <span class="comment-time">2025.11.04</span>
+                    <button class="comment-report">신고</button>
+                  </div>
+                </div>
+                <div class="comment-item">
+                  <div class="comment-text">도쿄 갔을 때 이 영상 보고 루트 코피 찾아갔어요. 분위기 최고!</div>
+                  <div class="comment-foot">
+                    <span class="comment-time">2025.12.21</span>
+                    <button class="comment-report">신고</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 다른 에피소드 -->
+          <div class="card" style="margin-top: 12px">
+            <div class="card-head">다른 에피소드</div>
+            <div class="card-body nt" style="padding-left: 16px; padding-right: 16px">
+              <div class="ep-list">
+                <div class="ep-row">
+                  <div class="ep-thumb">🎬</div>
+                  <div class="ep-info">
+                    <div class="ep-title">EP.11 · 도쿄 혼자 일주일 살아보기</div>
+                    <div class="ep-date">2024.01.22</div>
+                  </div>
+                  <span class="ep-arrow">›</span>
+                </div>
+                <div class="ep-row">
+                  <div class="ep-thumb">🎬</div>
+                  <div class="ep-info">
+                    <div class="ep-title">EP.13 · 제주도 숨은 맛집 투어</div>
+                    <div class="ep-date">2024.05.08</div>
+                  </div>
+                  <span class="ep-arrow">›</span>
+                </div>
+                <div class="ep-row">
+                  <div class="ep-thumb">🎬</div>
+                  <div class="ep-info">
+                    <div class="ep-title">EP.08 · 오사카 2박 3일 여행</div>
+                    <div class="ep-date">2023.09.10</div>
+                  </div>
+                  <span class="ep-arrow">›</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let loaded = false;
+      function loadVideo() {
+        if (loaded) return;
+        loaded = true;
+        const wrap = document.getElementById('videoWrap');
+        document.getElementById('videoCover').remove();
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        wrap.appendChild(iframe);
+        wrap.style.cursor = 'default';
+      }
+
+      function switchMap(t) {
+        document.getElementById('tabNaver').className = 'map-tab' + (t === 'naver' ? ' active' : '');
+        document.getElementById('tabGoogle').className = 'map-tab' + (t === 'google' ? ' active' : '');
+      }
+
+      let recOn = localStorage.getItem('ep12_rec') === 'true',
+        recN = 24;
+      let visitOn = localStorage.getItem('ep12_visit') === 'true',
+        visitN = 8;
+
+      function updateRec() {
+        const n = recN + (recOn ? 1 : 0);
+        document.getElementById('recNum').textContent = n;
+        document.getElementById('recBtn').className = 'comm-btn' + (recOn ? ' rec-on' : '');
+        document.getElementById('recActBtn').textContent = `👍 추천 ${n}`;
+      }
+      function toggleRec() {
+        recOn = !recOn;
+        localStorage.setItem('ep12_rec', recOn);
+        updateRec();
+      }
+
+      function updateVisit() {
+        const n = visitN + (visitOn ? 1 : 0);
+        document.getElementById('visitNum').textContent = n;
+        document.getElementById('visitBtn').className = 'comm-btn' + (visitOn ? ' visit-on' : '');
+        document.getElementById('visitActBtn').textContent = `✅ 방문 ${n}`;
+      }
+      function toggleVisit() {
+        visitOn = !visitOn;
+        localStorage.setItem('ep12_visit', visitOn);
+        updateVisit();
+      }
+
+      updateRec();
+      updateVisit();
+
+      function addComment() {
+        const input = document.getElementById('commentInput');
+        const text = input.value.trim();
+        if (!text) return;
+        const item = document.createElement('div');
+        item.className = 'comment-item';
+        item.innerHTML = `<div class="comment-text">${text}</div>
+      <div class="comment-foot"><span class="comment-time">방금 전</span><button class="comment-report">신고</button></div>`;
+        document.getElementById('commentList').appendChild(item);
+        input.value = '';
+      }
+    </script>
+  </body>
+</html>

@@ -6,6 +6,8 @@ import { useLanguage } from '../../hooks/useLanguage';
 import InstagramIcon from '../../assets/icons/brands/InstagramIcon';
 import FacebookIcon from '../../assets/icons/brands/FacebookIcon';
 import TwitterIcon from '../../assets/icons/brands/TwitterIcon';
+import YouTubeIcon from '../../assets/icons/brands/YouTubeIcon';
+
 import CopyIcon from '../../assets/icons/linear/CopyIcon';
 
 import { formatTel } from '../../util/helper';
@@ -24,6 +26,12 @@ function LocationArticleInformation({ location }) {
           <span className={styles.main}>{location[`description_${language}`]}</span>
         </div>
       )}
+      <div className={styles.row}>
+        <span className={styles.sub}>{isKorean ? '분류' : 'Category'}</span>
+        <span className={styles.main}>
+          {location.categories.emoji} {location.categories[`category_${language}`]}
+        </span>
+      </div>
       {location.tel && (
         <div className={styles.row}>
           <span className={styles.sub}>{isKorean ? '연락처' : 'Tel'}</span>
@@ -65,6 +73,7 @@ function LocationArticleInformation({ location }) {
               if (brand === 'instagram') icon = <InstagramIcon color={color} />;
               if (brand === 'twitter') icon = <TwitterIcon color={color} />;
               if (brand === 'facebook') icon = <FacebookIcon color={color} />;
+              if (brand === 'youtube') icon = <YouTubeIcon color={color} />;
 
               return (
                 <a key={id} className={`${styles.social} ${styles[brand]}`} href={url} target="_blank" style={{ color: `var(--color-${brand})`, borderColor: `var(--color-${brand}-50)`, backgroundColor: `var(--color-${brand}-055)` }}>

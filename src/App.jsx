@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 
-import Admin from './page/Admin';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 import Episodes from './page/Episodes';
 import EpisodeDetail from './page/EpisodeDetail';
 import Feedback from './page/Feedback';
@@ -12,14 +11,16 @@ import Home from './page/Home';
 import ImagePreview from './page/ImagePreview';
 import LocationDetail from './page/LocationDetail';
 import Locations from './page/Locations';
-import Login from './page/Login';
 import MyMaps from './page/MyMaps';
 import UsageGuide from './page/UsageGuide';
 import YouTube from './page/YouTube';
 
-import AppLayout from './UI/layout/AppLayout';
+import Geocode from './page/Geocode';
 
-import { MAP_STORAGE_KEY } from './util/constants';
+import AppLayout from './UI/layout/AppLayout';
+import HomeLayout from './UI/layout/HomeLayout';
+
+import { MAP_STORAGE_KEY, MEMO_STORAGE_KEY } from './util/constants';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,34 +32,23 @@ const queryClient = new QueryClient({
 
 const CustomRouter = () => {
   const location = useLocation();
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    function setDataset(key) {
-      const value = JSON.parse(localStorage.getItem(key));
-      document.documentElement.setAttribute(`data-${key}`, value);
-    }
+    const initialData = [];
 
-    setTimeout(() => {
-      setDataset('language');
-      setDataset('theme');
-      setDataset('grid');
-    }, 50);
-  }, [dispatch]);
-
-  useEffect(() => {
     const appData = localStorage.getItem(MAP_STORAGE_KEY);
+    const memoData = localStorage.getItem(MEMO_STORAGE_KEY);
 
-    if (!appData) {
-      const initialData = [];
-      localStorage.setItem(MAP_STORAGE_KEY, JSON.stringify(initialData));
-    }
+    if (!appData) localStorage.setItem(MAP_STORAGE_KEY, JSON.stringify(initialData));
+    if (!memoData) localStorage.setItem(MEMO_STORAGE_KEY, JSON.stringify(initialData));
   }, []);
 
   return (
     <Routes location={location}>
-      <Route element={<AppLayout />}>
+      <Route element={<HomeLayout />}>
         <Route index element={<Home />} />
+      </Route>
+      <Route element={<AppLayout />}>
         <Route path=":category" element={<Locations />} />
         <Route path=":category/:locationId" element={<LocationDetail />} />
         <Route path="episode" element={<Episodes />} />
@@ -68,8 +58,7 @@ const CustomRouter = () => {
         <Route path="preview/:folderId" element={<ImagePreview />} />
         <Route path="feedback" element={<Feedback />} />
         <Route path="guide" element={<UsageGuide />} />
-        <Route path="login" element={<Login />} />
-        <Route path="admin" element={<Admin />} />
+        <Route path="geo" element={<Geocode />} />
       </Route>
     </Routes>
   );

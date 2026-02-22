@@ -2,13 +2,14 @@ import { AnimatePresence, motion } from 'motion/react';
 
 import styles from './BookmarkModal.module.css';
 
-function BookmarkModal({ active, onClose, children }) {
+function BookmarkModal({ active, overflowY = 'unset', onClose, children }) {
   return (
     <AnimatePresence>
       {active && (
         <div id={styles.modal}>
           <motion.div
             className={styles.container}
+            style={{ overflowY }}
             variants={{
               visible: { transform: 'translate(-50%, -50%)', opacity: 1 },
               hidden: { transform: 'translate(-50%, 30%)', opacity: 0 },

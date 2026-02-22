@@ -10,7 +10,6 @@ import FolderIcon from '../assets/icons/bold/FolderIcon';
 import FolderStarIcon from '../assets/icons/bold/FolderStarIcon';
 
 import { useLanguage } from '../hooks/useLanguage';
-import { useLocalStorage } from '../hooks/useLocalStorage';
 
 import { FOLDER_COLORS, MAP_STORAGE_KEY } from '../util/constants';
 
@@ -77,7 +76,7 @@ function CreateFolder({ folders = [], onClose, onFolderCreated, isInitialCreatio
 
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
-      folder: editFolder?.folderName ?? '', // 폴더명 pre-populate
+      folder: editFolder?.folderName ?? '',
     },
   });
 

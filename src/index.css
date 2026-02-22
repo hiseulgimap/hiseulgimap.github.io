@@ -22,31 +22,31 @@
   --width: 64rem;
   --header-height: 4.25rem;
 
-  --color-zinc-0: oklch(100% 0 0);
-  --color-zinc-50: oklch(98.5% 0 0);
-  --color-zinc-100: oklch(96.7% 0.001 286.375);
-  --color-zinc-200: oklch(92% 0.004 286.32);
-  --color-zinc-300: oklch(87.1% 0.006 286.286);
-  --color-zinc-400: oklch(70.5% 0.015 286.067);
-  --color-zinc-500: oklch(55.2% 0.016 285.938);
-  --color-zinc-600: oklch(44.2% 0.017 285.786);
-  --color-zinc-700: oklch(37% 0.013 285.805);
-  --color-zinc-800: oklch(27.4% 0.006 286.033);
-  --color-zinc-850: oklch(24.011% 0.0038 286.012);
-  --color-zinc-900: oklch(21% 0.006 285.885);
-  --color-zinc-950: oklch(14.1% 0.005 285.823);
+  --color-zinc-0: #ffffff;
+  --color-zinc-50: #fafafa;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-400: #9f9fa9;
+  --color-zinc-500: #71717b;
+  --color-zinc-600: #52525c;
+  --color-zinc-700: #3f3f46;
+  --color-zinc-800: #27272a;
+  --color-zinc-850: #1f1f21;
+  --color-zinc-900: #18181b;
+  --color-zinc-950: #09090b;
 
-  --color-amber-50: oklch(98.7% 0.022 95.277);
-  --color-amber-100: oklch(96.2% 0.059 95.617);
-  --color-amber-200: oklch(92.4% 0.12 95.746);
-  --color-amber-300: oklch(87.9% 0.169 91.605);
-  --color-amber-400: oklch(82.8% 0.189 84.429);
-  --color-amber-500: oklch(76.9% 0.188 70.08);
-  --color-amber-600: oklch(66.6% 0.179 58.318);
-  --color-amber-700: oklch(55.5% 0.163 48.998);
-  --color-amber-800: oklch(47.3% 0.137 46.201);
-  --color-amber-900: oklch(41.4% 0.112 45.904);
-  --color-amber-950: oklch(27.9% 0.077 45.635);
+  --color-amber-50: #fffbeb;
+  --color-amber-100: #fef3c6;
+  --color-amber-200: #fee685;
+  --color-amber-300: #ffd230;
+  --color-amber-400: #ffb900;
+  --color-amber-500: #fe9a00;
+  --color-amber-600: #e17100;
+  --color-amber-700: #bb4d00;
+  --color-amber-800: #973c00;
+  --color-amber-900: #7b3306;
+  --color-amber-950: #461901;
 
   --color-folder-red-light: oklch(70.4% 0.191 22.216 / 0.2);
   --color-folder-red-base: oklch(70.4% 0.191 22.216);
@@ -99,8 +99,8 @@
   --color-folder-zinc-light: oklch(70.5% 0.015 286.067 / 0.2);
   --color-folder-zinc-base: oklch(70.5% 0.015 286.067);
 
-  --color-folder-stone-light: oklch(70.9% 0.01 56.259 / 0.2);
-  --color-folder-stone-base: oklch(70.9% 0.01 56.259);
+  --color-folder-stone-light: #a6a09b33;
+  --color-folder-stone-base: #a6a09b;
 
   --border-solid: 1px solid var(--color-border);
 
@@ -110,8 +110,9 @@
 }
 
 :root,
-:root[data-theme='light'] {
-  --color-font: var(--color-zinc-600);
+:root[data-theme='light'],
+[data-theme='light'] {
+  --color-font: var(--color-zinc-700);
 
   --color-toast-content: var(--color-zinc-0);
 
@@ -137,6 +138,10 @@
   --color-facebook-055: #417dff0e;
   --color-facebook-50: #417dff80;
 
+  --color-youtube: #ff3131;
+  --color-youtube-055: #ff31310e;
+  --color-youtube-50: #ff313180;
+
   --color-twitter: #1d1d1d;
   --color-twitter-055: #1d1d1d0e;
   --color-twitter-50: #1d1d1d80;
@@ -158,27 +163,31 @@
 
   --color-border: var(--color-zinc-200);
   --color-border-light: var(--color-zinc-100);
-  --color-border-medium: var(--color-zinc-300);
+  --color-border-medium: var(--color-zinc-400);
 
   --color-bg: var(--color-zinc-0);
 
-  --color-red: oklch(63.7% 0.237 25.331);
-  --color-red-10: rgba(251, 44, 54, 0.1);
-  --color-red-25: rgba(251, 44, 54, 0.25);
+  --color-red: #fb2c36;
+  --color-red-medium: #e0232c;
+  --color-red-dark: #c71922;
+  --color-red-10: #fb2c361a;
+  --color-red-25: #fb2c3640;
 
-  --color-orange: oklch(75% 0.183 55.934);
-  --color-orange-10: oklch(75% 0.183 55.934 / 0.1);
-  --color-orange-15: oklch(75% 0.183 55.934 / 0.15);
+  --color-orange: #ff8903;
+  --color-orange-10: #ff89031a;
+  --color-orange-15: #ff890326;
 
   --color-link: #3190ff;
 
   --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.075), 0 2px 4px -2px rgb(0 0 0 / 0.075);
   --shadow-hover: 0 4px 10px -1px rgb(0 0 0 / 0.1), 0 2px 8px -2px rgb(0 0 0 / 0.1);
   --shadow-red: 0 4px 6px -1px rgb(231 0 11 / 0.075), 0 2px 4px -2px rgb(231 0 11/0.075);
-  --shadow-primary: 0 4px 10px -1px rgb(255 185 0 / 0.15), 0 2px 8px -2px rgb(255 185 0 / 0.15);
+  --shadow-primary: 0 4px 10px -1px rgb(255 185 0 / 0.25), 0 2px 8px -2px rgb(255 185 0 / 0.25);
+  --shadow-primary-hover: 0 4px 10px -1px rgb(255 185 0 / 0.5), 0 2px 8px -2px rgb(255 185 0 / 0.5);
 }
 
-:root[data-theme='dark'] {
+:root[data-theme='dark'],
+[data-theme='dark'] {
   --color-font: var(--color-zinc-200);
 
   --color-toast-content: var(--color-zinc-850);
@@ -199,17 +208,21 @@
   --color-primary-50: rgba(254, 154, 0, 0.5);
   --color-primary-65: rgba(254, 154, 0, 0.75);
 
-  --color-instagram: #d53864;
-  --color-instagram-055: #d538640e;
-  --color-instagram-50: #d5386480;
+  --color-instagram: #e14c77;
+  --color-instagram-055: #e14c770e;
+  --color-instagram-50: #e14c7780;
 
-  --color-facebook: #4e7dff;
-  --color-facebook-055: #4e7dff0e;
-  --color-facebook-50: #4e7dff80;
+  --color-facebook: #668fff;
+  --color-facebook-055: #668fff0e;
+  --color-facebook-50: #668fff80;
 
   --color-twitter: #eaeaea;
   --color-twitter-055: #eaeaea0e;
   --color-twitter-50: #eaeaea80;
+
+  --color-youtube: #e93f3f;
+  --color-youtube-055: #e93f3f0e;
+  --color-youtube-50: #e93f3f80;
 
   --color-content: var(--color-zinc-900);
 
@@ -230,20 +243,22 @@
   --color-border-light: var(--color-zinc-800);
   --color-border-medium: var(--color-zinc-600);
 
+  --color-red: #e7313a;
+  --color-red-medium: #e7222b;
   --color-red: oklch(57.7% 0.245 27.325);
-  --color-red-10: rgba(231, 0, 11, 0.1);
-  --color-red-25: rgba(231, 0, 11, 0.25);
+  --color-red-10: #e7000b1a;
+  --color-red-25: #e7000b40;
 
-  --color-green: oklch(70.5% 0.213 47.604);
-  --color-green-10: oklch(70.5% 0.213 47.604 / 0.1);
-  --color-green-15: oklch(70.5% 0.213 47.604 / 0.15);
+  --color-green: #ff6900;
+  --color-green-10: #ff69001a;
+  --color-green-15: #ff690026;
 
-  --color-link: #1979e6;
+  --color-link: #3f8feb;
 
   --color-bg: var(--color-zinc-900);
 
-  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.25), 0 2px 4px -2px rgb(0 0 0 / 0.25);
-  --shadow-hover: 0 4px 10px -1px rgb(0 0 0 / 0.4), 0 2px 8px -2px rgb(0 0 0 / 0.4);
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.45), 0 2px 4px -2px rgb(0 0 0 / 0.45);
+  --shadow-hover: 0 4px 10px -1px rgb(0 0 0 / 0.75), 0 2px 8px -2px rgb(0 0 0 / 0.75);
   --shadow-red: 0 4px 6px -1px rgb(193 0 7 / 0.2), 0 2px 4px -2px rgb(193 0 7 / 0.2);
   --shadow-primary: 0 4px 10px -1px rgb(254 154 0 / 0.15), 0 2px 8px -2px rgb(254 154 0 / 0.15);
 }

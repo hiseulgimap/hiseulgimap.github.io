@@ -10,6 +10,7 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 import { useEpisodes } from '../service/episodes/useEpisodes';
 
 import { EPISODE_PAGE_SIZE } from '../util/constants';
+import Searchlist from '../components/Searchlist';
 
 function Episodes() {
   const [type] = useLocalStorage('grid', 'list');
@@ -20,6 +21,7 @@ function Episodes() {
   return (
     <div>
       <EpisodeHeaderLayout title_ko="에피소드별 지도" title_en="Episode Maps" selectedType={selectedType} onSelectType={setSelectedType} />
+      <Searchlist key={selectedType} count={count} />
       <Episode selectedType={selectedType} />
       {!isLoading && <Pagination count={count} size={EPISODE_PAGE_SIZE} />}
     </div>

@@ -14,11 +14,11 @@ export function formatTimestamp(seconds) {
   return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 }
 
+export function formatTel(tel) {
+  return tel.split(' ').join('').split('-').join('');
+}
+
 export function getGoogleDestinationLink(address) {
   const encoded = encodeURIComponent(address);
   return `https://www.google.com/maps/dir/?api=1&destination=${encoded}`;
-}
-
-export function formatTel(tel) {
-  return tel.split(' ').join('').split('-').join('');
 }

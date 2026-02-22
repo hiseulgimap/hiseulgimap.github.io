@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 import { AnimatePresence, motion } from 'motion/react';
 
@@ -10,7 +11,6 @@ import ChevronDownIcon from '../assets/icons/linear/ChevronDownIcon';
 import { useLanguage } from '../hooks/useLanguage';
 
 import styles from './FeedbackForm.module.css';
-import toast from 'react-hot-toast';
 
 function FeedbackForm() {
   let typeLabel;

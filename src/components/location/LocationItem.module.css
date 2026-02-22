@@ -1,8 +1,9 @@
 .location:link,
 .location:visited {
+  height: 100%;
   display: flex;
   gap: 1rem;
-  padding: 1rem;
+  padding: 1.25rem;
   border: var(--border-solid);
   border-radius: 0.75rem;
   box-shadow: var(--shadow);
@@ -15,7 +16,7 @@
 
 .location:hover,
 .location:active {
-  border-color: var(--color-primary-25);
+  border-color: var(--color-primary-50);
   background-color: var(--color-primary-5);
   transform: translateY(-6px);
 }

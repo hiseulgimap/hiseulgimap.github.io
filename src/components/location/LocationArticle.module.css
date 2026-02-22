@@ -14,7 +14,10 @@
 .map-wrap {
   border: var(--border-solid);
   border-radius: 0.75rem;
-  transition: border-color var(--transition);
+  box-shadow: var(--shadow);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
   animation: slideUp 0.55s ease;
   overflow: hidden;
 }
@@ -37,36 +40,49 @@
 
 .map-action {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
   padding: 1rem;
   font-size: 0.8125rem;
   background-color: var(--color-copy);
   transition: background-color var(--transition);
 }
 
+.map-action > p {
+  color: var(--color-copy-font);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.5;
+  transition: color var(--transition);
+}
+
+.map-action > span {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
 .map-action a:link,
 .map-action a:visited {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  margin-left: auto;
   gap: 0.375rem;
-  padding: 0.75rem 1rem;
   color: var(--color-copy-font);
   font-size: 0.75rem;
-  font-weight: 600;
-  border: var(--border-solid);
-  border-radius: 0.5rem;
-  border-color: var(--color-copy-border);
-  transition:
-    color var(--transition),
-    border-color var(--transition);
+  font-weight: 400;
+  text-decoration: underline;
+  transition: color var(--transition);
 }
 
 .map-action a:hover,
 .map-action a:active {
-  border-color: var(--color-copy-border-light);
+  text-decoration: none;
+}
+
+.map-action > a > svg {
+  width: 0.75rem;
+  height: 0.75rem;
 }
 
 .content {
@@ -86,6 +102,22 @@
 @media screen and (max-width: 57.5rem) {
   #article {
     grid-template-columns: 1fr 20rem;
+  }
+}
+
+@media screen and (max-width: 53.125rem) {
+  .map-action p > span {
+    display: none;
+  }
+
+  .map-action p {
+    width: 1.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1;
+    border-radius: 0.365rem;
+    background-color: var(--color-copy-sub);
   }
 }
 
